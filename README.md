@@ -85,7 +85,7 @@ Why are the estimated number of Bytes different?
     FROM `project-0c3c5223-416f-4242-b0f.dez_homework_3.yellow_tripdata_2024_1semester_ext`
     ;
 
-    Processed data: <b> 2.26 GB </b>
+    Processed data: 2.26 GB
     SELECT *
     FROM `project-0c3c5223-416f-4242-b0f.dez_homework_3.yellow_tripdata_2024_1semester_partitioned_clustered`
     WHERE tpep_dropoff_datetime BETWEEN '2024-01-01' AND '2024-06-01'
@@ -102,7 +102,7 @@ Why are the estimated number of Bytes different?
     FROM `project-0c3c5223-416f-4242-b0f.dez_homework_3.yellow_tripdata_2024_1semester_ext`
     ;
 
-    Processed data: <b> 2.29 GB </b>
+    Processed data: 2.29 GB
     SELECT *
     FROM `project-0c3c5223-416f-4242-b0f.dez_homework_3.yellow_tripdata_2024_1semester_clustered_clustered`
     WHERE tpep_dropoff_datetime BETWEEN '2024-01-01' AND '2024-06-01'
@@ -139,10 +139,12 @@ Use the materialized table you created earlier in your from clause and note the 
 
     Answer: False. 
     
-    Always its not recommend to cluster or partition our data for some reasons; One of them, only is suggested to do clustering/partitioning when the data table size stored exceed 1 GB, otherwise the reads of the metadata and the managment cost will not compensate the minimus improvements in performance that we could get. Another reason why its not recommended to do clustering, if we have a defined cost limit we cant measure in accurate way how much costs we will incur when processing the data. 
+    Always its not recommend to cluster or partition our data for some reasons; One of them, only is suggested to do clustering/partitioning when the data table size stored exceed 1 GB, otherwise the reads of the metadata and the managment cost will not compensate the minimus improvements in performance that we could get. Another reason why its not recommended to do clustering, if we have a defined cost limit we cant measure in accurate way how much costs we will incur when processing the data; Also, its not suggested to use clustering if we only need to filter one specific column in our dataset, because its usefull when filtering multiple columns (up to 4).
 
 <b> Question 9. </b> Understanding table scans: Write a SELECT count(*) query FROM the materialized table you created. How many bytes does it estimate will be read? Why?
 
-    Answer: 
+    Answer: 0 MB
 
+    The query will process 0 MB, because due the columnar storage used by Bigquery, with the aggregation function COUNT(*) we are not specifyng any column to be scanned,
+    so when the query is executed the records count output is obtained from the metadata of the table without scanning other columns or additional info.  
     
