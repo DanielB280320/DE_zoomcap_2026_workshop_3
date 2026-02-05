@@ -1,0 +1,8 @@
+# Ignore all json files
+*.json
+
+# Ignore all env files
+*.env
+
+# Ignore all parquet files
+*.parquet
